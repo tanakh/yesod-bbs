@@ -1,0 +1,40 @@
+<h1>Yesod 掲示板
+
+<hr>
+
+<dl>
+  $forall post <- posts
+    <dt>
+      #{toInteger $ fst post} : 
+      <a href="mailto:#{postMail $ snd post}">
+        <b>#{postName $ snd post}
+      &nbsp;: #{show $ postDate $ snd post}
+    <dd>#{postContent $ snd post}
+
+<hr>
+
+<form method="post" action=@{RootR}>
+  <table>
+    <tr>
+      <td>名前:
+      <td>
+      	<input type="text" name="name">
+    <tr>
+      <td>メール:
+      <td>
+        <input type="text" name="mail">
+    <tr>
+      <td>本文:
+      <td>
+        <textarea name="content" rows="4" cols="40">
+    <tr>
+      <td>&nbsp;
+      <td>
+        <input type="submit" value="投稿">
+
+<hr>
+
+<center>
+  Powered by 
+  <a href="http://docs.yesodweb.com/">
+    <b>Yesod #{yesodVersion}

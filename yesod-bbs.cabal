@@ -1,0 +1,56 @@
+name:              yesod-bbs
+version:           0.0.0
+license:           BSD3
+license-file:      LICENSE
+author:            tanakh
+maintainer:        tanakh
+synopsis:          The greatest Yesod web application ever.
+description:       I'm sure you can say something clever here if you try.
+category:          Web
+stability:         Experimental
+cabal-version:     >= 1.6
+build-type:        Simple
+homepage:          http://yesod-bbs.yesodweb.com/
+
+Flag production
+    Description:   Build the production executable.
+    Default:       False
+
+executable         yesod-bbs-test
+    if flag(production)
+        Buildable: False
+    main-is:       test.hs
+    build-depends: base         >= 4       && < 5
+                 , yesod        >= 0.7     && < 0.8
+                 , yesod-auth
+                 , yesod-static
+                 , mime-mail
+                 , wai-extra
+                 , directory
+                 , bytestring
+                 , text
+                 , time
+                 , persistent
+                 , persistent-sqlite
+                 , template-haskell
+                 , hamlet
+                 , web-routes
+                 , hjsmin
+                 , transformers
+                 , warp
+    ghc-options:   -Wall -threaded
+
+executable         yesod-bbs-production
+    if flag(production)
+        Buildable: True
+    else
+        Buildable: False
+    cpp-options:   -DPRODUCTION
+    main-is:       production.hs
+    ghc-options:   -Wall -threaded
+
+executable         yesod-bbs-devel
+    if flag(production)
+        Buildable: False
+    main-is:       devel-server.hs
+    ghc-options:   -Wall -O2 -threaded
